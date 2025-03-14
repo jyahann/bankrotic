@@ -88,4 +88,27 @@ final class RecordsRepository {
 
     return (todayRecord, otherRecords);
   }
+
+  Future<void> addTestRecords() async {
+    final now = DateTime.now();
+    final dates = [
+      now,
+      now.subtract(Duration(days: 1)),
+      now.subtract(Duration(days: 2)),
+    ];
+
+    final testSpends = [
+      Spend(tag: "пиво", cash: 1000),
+      Spend(tag: "сиги", cash: 500),
+      Spend(tag: "крипта", cash: 5000),
+    ];
+
+    for (var date in dates) {
+      final recordKey = _getRecordKey(date);
+      var record =
+          _getRecordFromCache(recordKey) ?? Record(date: date, spends: {});
+      record = record.copyWith(spends: {...record.spends, ...testSpends});
+      _saveRecordToCache(recordKey, record);
+    }
+  }
 }
