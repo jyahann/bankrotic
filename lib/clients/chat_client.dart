@@ -1,6 +1,6 @@
-import 'package:bankrotik/logger/logger.dart';
-import 'package:bankrotik/models/chat_request.dart';
-import 'package:bankrotik/models/chat_response.dart';
+import 'package:bankrotic/logger/logger.dart';
+import 'package:bankrotic/models/chat_request.dart';
+import 'package:bankrotic/models/chat_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';

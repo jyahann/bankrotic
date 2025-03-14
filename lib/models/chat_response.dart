@@ -1,4 +1,4 @@
-import 'package:bankrotik/models/chat_request.dart';
+import 'package:bankrotic/models/chat_request.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat_response.freezed.dart';

@@ -1,4 +1,4 @@
-# bankrotik
+# bankrotic
 
 A new Flutter project.
 

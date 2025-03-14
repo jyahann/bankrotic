@@ -11,8 +11,8 @@
 //     ]
 //   }'
 
-import 'package:bankrotik/clients/chat_client.dart';
-import 'package:bankrotik/models/chat_request.dart';
+import 'package:bankrotic/clients/chat_client.dart';
+import 'package:bankrotic/models/chat_request.dart';
 
 final class ChatRepository {
   static const instance = ChatRepository._();
