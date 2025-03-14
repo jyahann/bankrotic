@@ -2,7 +2,7 @@
 
 // curl https://api.openai.com/v1/chat/completions \
 //   -H "Content-Type: application/json" \
-//   -H "Authorization: Bearer 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" \
+//   -H "" \
 //   -d '{
 //     "model": "gpt-4o-mini",
 //     "store": true,
