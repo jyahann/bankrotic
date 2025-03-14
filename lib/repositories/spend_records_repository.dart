@@ -97,17 +97,15 @@ final class RecordsRepository {
       now.subtract(Duration(days: 2)),
     ];
 
-    final testSpends = [
+    final testSpends = {
       Spend(tag: "пиво", cash: 1000),
       Spend(tag: "сиги", cash: 500),
       Spend(tag: "крипта", cash: 5000),
-    ];
+    };
 
     for (var date in dates) {
       final recordKey = _getRecordKey(date);
-      var record =
-          _getRecordFromCache(recordKey) ?? Record(date: date, spends: {});
-      record = record.copyWith(spends: {...record.spends, ...testSpends});
+      var record = Record(date: date, spends: testSpends);
       _saveRecordToCache(recordKey, record);
     }
   }
