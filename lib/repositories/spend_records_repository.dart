@@ -14,7 +14,7 @@ final class RecordsRepository {
     prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> addSpend(String spend) async {
+  SpendRecord addSpend(Spend spend) {
     final now = DateTime.now();
     final date = DateTime(now.year, now.month, now.day);
     final recordKey = _getRecordKey(date);
@@ -25,32 +25,33 @@ final class RecordsRepository {
       spends.add(spend);
       record = record.copyWith(spends: spends);
     } else {
-      record = Record(date: date, spends: [spend]);
+      record = SpendRecord(date: date, spends: [spend]);
     }
 
     _saveRecordToCache(recordKey, record);
+    return record;
   }
 
-  void _saveRecordToCache(String key, Record record) {
+  void _saveRecordToCache(String key, SpendRecord record) {
     final json = jsonEncode(record.toJson());
     prefs.setString(key, json);
   }
 
-  Record? _getRecordFromCache(String key) {
+  SpendRecord? _getRecordFromCache(String key) {
     final json = prefs.getString(key);
 
     if (json == null) return null;
 
     final jsonMap = jsonDecode(json) as Map<String, Object?>;
-    return Record.fromJson(jsonMap);
+    return SpendRecord.fromJson(jsonMap);
   }
 
   String _getRecordKey(DateTime date) {
     return "record_${date.year}_${date.month}_${date.day}";
   }
 
-  List<Record> getAllRecords() {
-    final records = <Record>[];
+  List<SpendRecord> getAllRecords() {
+    final records = <SpendRecord>[];
     for (var key in prefs.getKeys()) {
       if (key.startsWith("record_")) {
         final record = _getRecordFromCache(key);
@@ -62,11 +63,11 @@ final class RecordsRepository {
     return records;
   }
 
-  (Record? today, List<Record> other) getTodayAndOtherRecords() {
+  (SpendRecord? today, List<SpendRecord> other) getTodayAndOtherRecords() {
     final now = DateTime.now();
     final todayDate = DateTime(now.year, now.month, now.day);
-    Record? todayRecord;
-    final otherRecords = <Record>[];
+    SpendRecord? todayRecord;
+    final otherRecords = <SpendRecord>[];
 
     for (var key in prefs.getKeys()) {
       if (key.startsWith("record_")) {
@@ -86,17 +87,34 @@ final class RecordsRepository {
 
   Future<void> addTestRecords() async {
     final now = DateTime.now();
+    final date = DateTime(now.year, now.month, now.day);
     final dates = [
-      now,
-      now.subtract(Duration(days: 1)),
-      now.subtract(Duration(days: 2)),
+      date,
+      date.subtract(Duration(days: 1)),
+      date.subtract(Duration(days: 2)),
     ];
 
-    final testSpends = ["1000 на пиво", "500 на сиги", "10000 на еду"];
+    final spends = {
+      0: [
+        Spend(reason: "пиво", amount: "2 000"),
+        Spend(reason: "сиги", amount: "5 000"),
+        Spend(reason: "покушать", amount: "10 000"),
+      ],
+      1: [
+        Spend(reason: "крипта", amount: "пол зп"),
+        Spend(reason: "кредит", amount: "зп"),
+        Spend(reason: "эир подс", amount: "60 000"),
+      ],
+      2: [
+        Spend(reason: "айфон кредит", amount: "40 000"),
+        Spend(reason: "долг другу", amount: "20 000"),
+        Spend(reason: "хата", amount: "250 000"),
+      ],
+    };
 
-    for (var date in dates) {
-      final recordKey = _getRecordKey(date);
-      var record = Record(date: date, spends: testSpends);
+    for (var i = 0; i < dates.length; i++) {
+      final recordKey = _getRecordKey(dates[i]);
+      var record = SpendRecord(date: dates[i], spends: spends[i]!);
       _saveRecordToCache(recordKey, record);
     }
   }

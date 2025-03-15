@@ -17,7 +17,8 @@ abstract class ChatClient {
           baseUrl: "https://api.openai.com/v1/chat/completions",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer",
+            "Authorization":
+                "Bearer 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",
           },
         ),
       )..interceptors.add(TalkerDioLogger(talker: logger)),
