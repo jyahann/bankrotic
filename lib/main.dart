@@ -1,8 +1,16 @@
+import 'dart:async';
+
+import 'package:bankrotic/logger/logger.dart';
 import 'package:bankrotic/repositories/chat_repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runZonedGuarded(() => runApp(const MyApp()), (
+    Object error,
+    StackTrace stack,
+  ) {
+    logger.handle(error, stack, 'Uncaught app exception');
+  });
 }
 
 class MyApp extends StatelessWidget {

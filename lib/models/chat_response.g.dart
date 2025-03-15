@@ -15,7 +15,6 @@ _ChatResponse _$ChatResponseFromJson(Map<String, dynamic> json) =>
           (json['choices'] as List<dynamic>)
               .map((e) => Choice.fromJson(e as Map<String, dynamic>))
               .toList(),
-      usage: Usage.fromJson(json['usage'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChatResponseToJson(_ChatResponse instance) =>
@@ -24,29 +23,22 @@ Map<String, dynamic> _$ChatResponseToJson(_ChatResponse instance) =>
       'object': instance.object,
       'created': instance.created,
       'choices': instance.choices,
-      'usage': instance.usage,
     };
 
 _Choice _$ChoiceFromJson(Map<String, dynamic> json) => _Choice(
   index: (json['index'] as num).toInt(),
   message: Message.fromJson(json['message'] as Map<String, dynamic>),
-  finishReason: json['finishReason'] as String,
 );
 
 Map<String, dynamic> _$ChoiceToJson(_Choice instance) => <String, dynamic>{
   'index': instance.index,
   'message': instance.message,
-  'finishReason': instance.finishReason,
 };
 
-_Usage _$UsageFromJson(Map<String, dynamic> json) => _Usage(
-  promptTokens: (json['promptTokens'] as num).toInt(),
-  completionTokens: (json['completionTokens'] as num).toInt(),
-  totalTokens: (json['totalTokens'] as num).toInt(),
-);
+_Message _$MessageFromJson(Map<String, dynamic> json) =>
+    _Message(role: json['role'] as String, content: json['content'] as String);
 
-Map<String, dynamic> _$UsageToJson(_Usage instance) => <String, dynamic>{
-  'promptTokens': instance.promptTokens,
-  'completionTokens': instance.completionTokens,
-  'totalTokens': instance.totalTokens,
+Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
+  'role': instance.role,
+  'content': instance.content,
 };

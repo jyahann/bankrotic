@@ -14,23 +14,18 @@ final class RecordsRepository {
     prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> addSpend(Spend spend) async {
+  Future<void> addSpend(String spend) async {
     final now = DateTime.now();
     final date = DateTime(now.year, now.month, now.day);
     final recordKey = _getRecordKey(date);
 
     var record = _getRecordFromCache(recordKey);
     if (record != null) {
-      final spends = record.spends.toSet();
-      final existingSpend = spends.lookup(spend);
-      if (existingSpend != null) {
-        spends.remove(existingSpend);
-        spend = spend.copyWith(cash: existingSpend.cash);
-      }
+      final spends = record.spends.toList();
       spends.add(spend);
       record = record.copyWith(spends: spends);
     } else {
-      record = Record(date: date, spends: {spend});
+      record = Record(date: date, spends: [spend]);
     }
 
     _saveRecordToCache(recordKey, record);
@@ -97,11 +92,7 @@ final class RecordsRepository {
       now.subtract(Duration(days: 2)),
     ];
 
-    final testSpends = {
-      Spend(tag: "пиво", cash: 1000),
-      Spend(tag: "сиги", cash: 500),
-      Spend(tag: "крипта", cash: 5000),
-    };
+    final testSpends = ["1000 на пиво", "500 на сиги", "10000 на еду"];
 
     for (var date in dates) {
       final recordKey = _getRecordKey(date);

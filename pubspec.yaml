@@ -41,9 +41,10 @@ dependencies:
   retrofit: ^4.4.0
   logger: ^2.4.0  # for logging purpose
   talker_dio_logger: ^4.7.0
+  talker_flutter: ^4.7.0
   talker: ^4.7.0
   shared_preferences: ^2.5.2
-  
+
 
 dev_dependencies:
   flutter_test:

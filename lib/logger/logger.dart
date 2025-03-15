@@ -1,5 +1,3 @@
+import 'package:talker_flutter/talker_flutter.dart';
 
-import 'package:talker/talker.dart';
-
-final logger = Talker(
-);
+final logger = TalkerFlutter.init();

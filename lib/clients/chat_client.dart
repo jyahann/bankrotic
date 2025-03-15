@@ -17,14 +17,18 @@ abstract class ChatClient {
           baseUrl: "https://api.openai.com/v1/chat/completions",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "",
+            "Authorization": "Bearer",
           },
         ),
       )..interceptors.add(TalkerDioLogger(talker: logger)),
     );
   }
 
-  factory ChatClient(Dio dio, {String? baseUrl, ParseErrorLogger? errorLogger}) = _ChatClient;
+  factory ChatClient(
+    Dio dio, {
+    String? baseUrl,
+    ParseErrorLogger? errorLogger,
+  }) = _ChatClient;
 
   @POST('')
   Future<ChatResponse> getSuggestion({@Body() required ChatRequest request});

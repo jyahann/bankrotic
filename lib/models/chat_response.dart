@@ -1,4 +1,3 @@
-import 'package:bankrotic/models/chat_request.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat_response.freezed.dart';
@@ -11,30 +10,25 @@ sealed class ChatResponse with _$ChatResponse {
     required String object,
     required int created,
     required List<Choice> choices,
-    required Usage usage,
   }) = _ChatResponse;
 
-  factory ChatResponse.fromJson(Map<String, Object?> json) => _$ChatResponseFromJson(json);
+  factory ChatResponse.fromJson(Map<String, Object?> json) =>
+      _$ChatResponseFromJson(json);
 }
 
 @freezed
 sealed class Choice with _$Choice {
-  const factory Choice({
-    required int index,
-    required Message message,
-    required String finishReason,
-  }) = _Choice;
+  const factory Choice({required int index, required Message message}) =
+      _Choice;
 
   factory Choice.fromJson(Map<String, Object?> json) => _$ChoiceFromJson(json);
 }
 
 @freezed
-sealed class Usage with _$Usage {
-  const factory Usage({
-    required int promptTokens,
-    required int completionTokens,
-    required int totalTokens,
-  }) = _Usage;
+sealed class Message with _$Message {
+  const factory Message({required String role, required String content}) =
+      _Message;
 
-  factory Usage.fromJson(Map<String, Object?> json) => _$UsageFromJson(json);
+  factory Message.fromJson(Map<String, Object?> json) =>
+      _$MessageFromJson(json);
 }
